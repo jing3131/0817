@@ -1,0 +1,116 @@
+# PHP
+
+- 基本
+// === 型態相等，並且內容一樣
+@require("MyLibrary.php");                      // @ 如果有出現錯誤訊息，不顯示，但依然不向後執行
+$b = ($a > 0) ? "positive" : "negative";        // (邏輯判斷) ? 是 : 否;
+!==                                             // 型態相同，內容不一樣or不同型別，內容相等(不完全相等)
+
+
+- 設定php.ini
+phpinfo();              // 查詢設定檔   php.ini
+// error_reporting = E_COMPILE_ERROR|E_RECOVERABLE_ERROR|E_ERROR|E_CORE_ERROR 什麼訊息要報告
+// display_errors = on
+// 更改完需重新啟動MAMP
+
+- 字串
+$userName = "a";
+echo "user name: $userName, Hello...";          // 雙引號可以參雜變數名稱
+                                                // 單引號將所有內容轉為字串
+$s = <<< AAA
+    Line ??? <br>
+    Line !!! <br>
+AAA;
+echo $s;                                        // <<< 代稱   可以輸入多行文字   代稱;
+
+
+$s= "01234567";
+$result = substr($s, 3, 4);                 // 找尋字串： substr(變數, 從哪開始, 取幾個)
+echo $result . "<br>";
+$result = str_replace("12", "00", $s);      // 取代字串： str_replace(字串, 取代的字串, 變數)
+echo $result . "<br>";
+
+$pos = strpos($s, "12", 2)                  // 找尋下標：strpos(變數, 想搜尋的字串, 從哪裡開始)
+// 如果找不到就return false
+(0的位置被找到 -> 0在if的判斷為false) 可用===判斷、在字串最前面加入填充物(Ex: $s = "x01234567")
+
+
+- 運算
+$x = 12;
+$y = "34";
+$result = $x+$y;                                // + 永遠做運算相加
+$results = $x.$y;                               // . 永遠做字串相接
+
+$x = 1;
+$y = "0x10";                        // "0x10" -> 字串   0x10 -> 數字(16進位)
+$z = 0x10;
+$x + $y = 1                         // 字串會從前面開始轉換，直到無法轉換為止 -> 1 + 0 =1
+$x + $z = 17
+
+$x = 100;
+$y = &$x;                           // &紀錄x的記憶體  -> x的記憶體 = y的記憶體
+unset($x);                          // 將x的記憶體刪除，y依然為原本的記憶體區塊
+
+
+mktime(13, 30, 0, 9, 10, 2012);    // mktime()時分秒月日年
+
+
+- incude、require
+include("testDefine.php");              // include() 可以複製testDefine的內容   (將獨立的testDefine檔案貼進來)
+                                        // include_once() 沒有引用過才執行
+require("testDefine.php");              // require()、require_once  態度較強硬，必要的存在，如果無法執行(Ex: 找不到檔案)會強制停止程式 
+
+
+- POST
+<?php
+    // var_dump($_POST);                                    // var_dump() 方便除錯
+
+    session_start();                                        // 使用session需宣告
+    if(isset($_POST["okbtn"])){                             // =  if($_POST["okbtn"])
+        $_SESSION["who"] = $_POST["userNameTextBox"];       // 將資料放進session陣列
+        header("Location: hello.php");                      // header("Location: 網址、檔案")  -> 轉址
+        exit();
+    }
+?>
+
+<body>
+    <form action="" method="post">                         
+    <!-- method="post"   -> $_POST["name"]  
+        action=".php" 要送往的地方          -> 不填表示把內容傳給自己
+    -->
+    <form>
+<body>
+
+
+- function
+function ShowStar() {						// over laoding 一種程式有多種呼叫方式
+	$args = func_get_args();				// func_get_args() 將使用者傳入的值紀錄
+	
+	if (!isset($args[0]))
+		$args[0] = 5;
+	if (!isset($args[1]))
+		$args[1] = "*";
+	ShowStar_all($args[0], $args[1]);
+}
+
+
+function test($i) {
+	return $i + 1;
+}
+$x = 2;
+$p = "test";
+echo $p($x);			// 透過字串呼叫到字串所說的方法
+
+
+$x = 100;
+function foo(){ 
+    f(isset($x)){
+        echo $x . "<br>";
+    }
+    else{
+        echo "not found <br>";
+    }
+    global $x;                  // 需要宣告為global才能看到全域變數
+    echo "foo" . $x;
+}
+foo();
