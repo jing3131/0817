@@ -1,7 +1,8 @@
 <?php
 
+session_start();
 if(isset($_POST["btnOK"])){
-  $_SESSION["uid"] = $_POST["btnOK"];
+  $_SESSION["uid"] = $_POST["txtUserName"];
   header("Location: index.php");
   exit();
 }

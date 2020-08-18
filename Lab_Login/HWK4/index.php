@@ -1,9 +1,9 @@
 <?php
 session_start();
 $userName ="Guest";
-// if(!isset($_SESSION["uid"])){
-//     $userName = $_SESSION["uid"];
-// }
+if(isset($_SESSION["uid"])){
+  $userName = $_SESSION["uid"];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
