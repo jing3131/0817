@@ -10,7 +10,7 @@ if (isset($_POST["btnOK"]))
 	$sUserName = $_POST["txtUserName"];
 	if (trim($sUserName) != "")
 	{
-		setcookie("userName", $sUserName);
+		setcookie("userName", $sUserName);				// setcookie(cookie名稱, 變數名稱);
 		header("Location: index.php");
 		exit();
 	}

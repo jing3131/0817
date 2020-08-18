@@ -8,7 +8,7 @@ $season = array(
     'winter' => '冬'); 
 
 echo "每年的四季分別為：<br>";
-foreach ($season as $key => $value){
+foreach ($season as $key => $value){            // $key 找出key值   foreach($陣列 as $key => $value)
 	echo $key, "=>", $value, "<br>";
 }
 

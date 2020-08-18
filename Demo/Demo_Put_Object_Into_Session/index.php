@@ -1,8 +1,8 @@
 <?php
-require_once "ClassLib.php";
-session_start();
+require_once "ClassLib.php";				// 要先定義物件(CDog)
+session_start();							// 才能啟動session
 
-if (!isset($_SESSION["obj"])) {
+if (!isset($_SESSION["obj"])) {				// 存進session裡的物件，每次重新讀取結束後會不斷的被消滅
 	$obj = new CDog(1, 10);	
 	$_SESSION["obj"] = $obj;
 }

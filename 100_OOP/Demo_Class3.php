@@ -13,7 +13,7 @@ class CAnimal
 	// public $weight;
 	private $_weight = 0;
 
-	function __construct($weightValue = 0) {
+	function __construct($weightValue = 0) {			// __construct 建構式
 		echo "Object Created.<br>";
 		$this->setWeight($weightValue);
 		// 還是寫成這樣: (哪一個比較好? @@" )

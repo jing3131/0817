@@ -2,7 +2,7 @@
 require_once "ClassLib.php";
 session_start();
 
-if (!isset($_SESSION["obj"])) {
+if (!isset($_SESSION["obj"])) {	
 	$obj = new CDog(2, 20);	
 	$_SESSION["obj"] = $obj;
 }

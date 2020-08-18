@@ -13,9 +13,9 @@ class CAnimal {
 	private $_weight = 0;
 	
 	function __construct() {
-		foreach ( get_class_vars ( "CAnimal" ) as $varName => $varValue ) {
+		foreach ( get_class_vars ( "CAnimal" ) as $varName => $varValue ) {			// get_class_vars ( "CAnimal" )	得知一個類別的成員陣列清單
 			if (substr ( $varName, 0, 1 ) != "_")
-				unset ( $this->$varName );
+				unset ( $this->$varName );											// unset 清除記憶體
 		}
 		
 		$this->weight = 0;

@@ -1,10 +1,44 @@
+# HTML
+<pre>			<!-- 可以照原排列列出 -->
+Line 1
+	Line 2
+<?php print_r($bloodType);  ?>
+</pre>
+
+
+<ul>
+    <?php for($i = 1; $i <= 3; $i++){ ?>        <!-- 可以用php包住html -->
+        <li><?= $i ?></li>                      <!-- = <?php echo $i ?> -->
+    <?php } ?>
+</ul>
+
+<ul>
+	<?php while ($item = readdir($fileResource)) : ?>			<!-- readdir()讀檔   可使用 : end當作{} 以方便閱讀--> 
+		<li><?php echo $item; ?></li>
+	<?php endwhile; ?>
+</ul>
+
+// 使用表單開啟檔案
+<!--在Clinet端
+	input type="file" 可以讓使用者選擇檔案開啟 
+	enctype="multipart/form-data" 表單的編碼方式
+-->
+<form method="post" enctype="multipart/form-data" action="">
+	1. Select a file：<input type="file" name="file1" /><br /> <input
+	type="submit" name="btnOK" value="2. 送出資料" />
+</form>
+
+<img src="IO_9.php">        <!-- img src裡也可以放.php -->
+
+
 # PHP
 
-- 基本
+- 基本語法
 // === 型態相等，並且內容一樣
 @require("MyLibrary.php");                      // @ 如果有出現錯誤訊息，不顯示，但依然不向後執行
 $b = ($a > 0) ? "positive" : "negative";        // (邏輯判斷) ? 是 : 否;
 !==                                             // 型態相同，內容不一樣or不同型別，內容相等(不完全相等)
+print_r($陣列);                                  // 可列出結構
 
 
 - 設定php.ini
@@ -114,3 +148,67 @@ function foo(){
     echo "foo" . $x;
 }
 foo();
+
+- 陣列
+foreach ($season as $value){					// foreach($陣列 as $value)
+    echo $value, "<br>";						// each 可用 "," 相連字串
+}
+foreach ($season as $key => $value){            // $key 找出key值   foreach($陣列 as $key => $value)
+	echo $key, "=>", $value, "<br>";
+}
+
+- 排序(sort)        -> 破壞性排序(原陣列會被改變)
+sort($testArray);				            // 照字串順序排列
+natsort($testArray);			            // 自然排序法 -> 按照數字大小排列
+usort($a, "cmp");                           // usort($陣列, "function名稱") -> user sort(可傳function進行排序)
+
+
+
+# I/O
+// __FILE__  可告訴現在檔案所存放的位置(路徑)
+basename ( __FILE__ );                      // 目前的檔案名稱
+dirname ( __FILE__ );                       // 資料夾名稱
+opendir ( "檔名" );		            	    // 開檔
+$_FILES["檔案原始名稱"]                       // 上傳檔案的原始名稱
+
+
+$test = move_uploaded_file ( $objFile ["tmp_name"], "./" . $objFile ["name"] );	        // move_uploaded_file 將使用者選取的檔案(已上傳的檔案)搬出去指定位置
+// tmp_name 一個臨時性檔案(來源檔案的亂數名稱)  "./" . $objFile ["name"]要搬去的位置與檔案名稱
+$objFile ["type"]                          // 型態
+objFile ["size"]                           // 檔案大小
+
+$lines = file ( 'data.txt' );				// file(檔案名稱) 會傳入一個陣列
+htmlspecialchars ( $line )                  // htmlspecialchars 如果檔案中含有< > 不當成html，顯示原內容(避免資安問題)
+
+$contents = file_get_contents('data.txt');			        // file_get_contents('檔名') 把檔案內容用字串回傳出來
+$fileSize = file_put_contents("data2.txt", $content);       // file_put_contents("寫出的檔案名稱", 內容)  -> 將檔案寫出去
+
+
+$f = fopen("data.txt", "r");				// fopen("檔名", "r")開檔 (r or w)
+while (!feof($f))							// feof($f) end of file 是否為檔案結尾處
+{
+	$line = fgets($f);						// fgets($f) 取得一行資料(字串)(不包含換行符號)
+	$sData .= Trim($line) . "<br>";
+}
+fclose($f);									// fclose($f) 關檔
+
+header("Content-Type: image/png");          // 圖片要轉碼 Content-Type:
+echo fread($fileHandle, filesize($filename));       // fread 一次讀一定的資料，分段處理，減少資源
+
+
+
+# class
+public function __construct(){}                     // __construct 建構式
+public function __destruct(){}                      // 物件摧毀
+$animal = null;                                     //  當值 = null or 當程式結束時，物件也不再被需要參考     -> destoryed
+$animal ->makeNoise();                              // 呼叫方法
+//$animal ->weight=10;                              // 呼叫屬性不用加$
+
+(參考Demo_class5.php)
+public function __set($k,$v){}                      //  在類別沒有定義時設定了一個陌生的屬性 ->  呼叫__set
+public function __get($k){}                         // 在類別沒有定義時呼叫了一個陌生的屬性 ->  呼叫__get
+
+get_class_vars ( "class" )                          // get_class_vars ( "class" )	得知一個類別的成員陣列清單
+unset ( $this->$varName );							// unset 清除記憶體
+
+// 存進session裡的物件，每次重新讀取結束後會不斷的被消滅

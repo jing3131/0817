@@ -1,8 +1,8 @@
 <?php 
-
-if (isset($_GET["logout"]))             // 讀到 ? 後面的東西 (index.php  ?logout")
+session_start();
+if (isset($_GET["logout"]))
 {
-	setcookie("userName", "Guest", time() - 3600);      //  清除cookie
+	setcookie("userName", "Guest", time() - 3600);
 	header("Location: index.php");
 	exit();
 }
@@ -19,8 +19,8 @@ if (isset($_POST["btnOK"]))
 	if (trim($sUserName) != "")
 	{
 		setcookie("userName", $sUserName);
-		if (isset($_COOKIE["lastPage"]))
-		  header(sprintf("Location: %s", $_COOKIE["lastPage"]));
+		if (isset($_SESSION["lastPage"]))
+		  header(sprintf("Location: %s", $_SESSION["lastPage"]));
 		else
 		   header("Location: index.php");
 		exit();
