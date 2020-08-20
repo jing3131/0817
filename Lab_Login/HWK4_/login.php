@@ -2,13 +2,28 @@
 
 session_start();
 if(isset($_POST["btnOK"])){
-  if($_POST["txtUserName"] != ""){
-    $_SESSION["uid"] = $_POST["txtUserName"];        
-    header("Location: index.php");
-    exit();
+  if($_POST["txtUserName"] != null){
+    $_SESSION["uid"] = $_POST["txtUserName"];   
+    if(isset($_SESSION["lastpage"])){
+      header("Location: secret.php");
+      exit();
+    }     
+    else{
+      header("Location: index.php");
+      exit();
+    }
   }
+  
+
 }
 if(isset($_POST["btnHome"])){
+  header("Location: index.php");
+  exit();
+}
+
+if(isset($_GET["logout"])){         // 讀到 ? 後面的東西 (index.php  ?logout")
+  $_SESSION["uid"] = null;          // 清除session
+  $_SESSION["lastpage"] = null;
   header("Location: index.php");
   exit();
 }
